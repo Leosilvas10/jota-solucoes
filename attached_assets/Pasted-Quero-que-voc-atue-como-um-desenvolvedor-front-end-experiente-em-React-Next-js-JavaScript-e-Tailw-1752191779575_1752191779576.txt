@@ -1,0 +1,211 @@
+Quero que você atue como um desenvolvedor front-end experiente em React, Next.js, JavaScript e Tailwind CSS, criando uma landing page profissional e otimizada para conversão, com base no PRD a seguir.
+
+Sobre o Projeto
+Nome da empresa: Jota Soluções
+
+Serviço: BPO Financeiro
+
+Objetivo: Capturar leads qualificados (empresários) interessados em diagnóstico gratuito + reunião estratégica.
+
+Público-alvo: Pequenos empresários, MEIs, microempresas em crescimento, negócios que precisam organizar o financeiro.
+
+Identidade Visual e Paleta de Cores
+Use as cores da marca:
+
+js
+Copiar
+Editar
+// Paleta Jota Soluções (extraída da logo)
+// Azul escuro principal:
+#21253D
+// Azul secundário:
+#364AA5
+// Azul claro/acento:
+#6C74DB
+// Branco:
+#FFFFFF
+// Preto para textos:
+#19191B
+Use azul escuro como cor principal dos CTAs, headers, botões.
+
+Utilize branco para fundos e contrastes.
+
+Use azul médio/claro para destaques, ícones e seções complementares.
+
+Evite excesso de degradês; prefira blocos sólidos, cards e seções com hierarquia visual.
+
+Stack Obrigatória
+React + Next.js
+
+JavaScript
+
+Tailwind CSS
+
+Seções e Estrutura
+Monte a página com as seguintes seções, usando design mobile-first, responsivo e acessível:
+
+Header fixo
+
+Logo à esquerda
+
+Botão CTA “Quero meu diagnóstico gratuito” (scroll para formulário)
+
+Menu simples (rolagem para seções)
+
+Hero Section
+
+Headline forte: “Descubra como transformar a saúde financeira da sua empresa!”
+
+Subtítulo: “Receba um diagnóstico financeiro gratuito e tenha uma reunião estratégica com o CEO da Jota Soluções.”
+
+Imagem/ilustração alinhada à área financeira/consultoria
+
+Botão CTA visível
+
+Seção de Dores (Empatia)
+
+Destaque as principais dores do público em cards ou lista:
+
+Não sabe se o negócio está dando lucro
+
+Decisões sem base nos números
+
+Falta de clareza ou planejamento financeiro
+
+Deseja crescer, mas sente insegurança
+
+Seção de Benefícios / Transformação
+
+Cards com benefícios claros:
+
+Clareza total dos números
+
+Metas e resultados visíveis
+
+Decisões estratégicas baseadas em dados
+
+Apoio de especialistas em BPO Financeiro
+
+Sobre a Jota Soluções
+
+Breve apresentação da empresa
+
+Foto do CEO (opcional)
+
+Breve missão/propósito
+
+Provas Sociais
+
+Depoimentos de clientes
+
+Números de empresas atendidas
+
+Logos de clientes (se houver)
+
+Prints/resultados (opcional)
+
+Formulário de Captura (com destaque visual)
+
+Título: “Solicite seu Diagnóstico Gratuito”
+
+Campos obrigatórios:
+
+Nome completo
+
+E-mail
+
+Telefone (WhatsApp)
+
+Nome da empresa
+
+Faturamento mensal aproximado (opções ou input)
+
+Segmento de atuação (opções ou input)
+
+Quantidade de contas bancárias
+
+Checkbox de consentimento LGPD (obrigatório)
+
+Botão CTA: “Quero meu diagnóstico!”
+
+Integração: simule ou oriente integração com CRM Clint (exemplo: endpoint de API ou instrução para o dev integrar)
+
+Página de agradecimento / Redirecionamento
+
+Após o envio do formulário, redirecione para uma página de obrigado com mensagem personalizada e link do Koalendar para agendamento de reunião com o CEO.
+
+FAQ (opcional)
+
+Perguntas frequentes sobre o serviço, dúvidas sobre diagnóstico, sigilo, como funciona o BPO, etc.
+
+Footer
+
+Logo, contatos, e-mail, redes sociais, link para política de privacidade
+
+Requisitos Técnicos
+Código limpo, componentes separados
+
+SEO básico: <title>, <meta description>, tags semânticas
+
+Responsividade total (mobile/tablet/desktop)
+
+Acessibilidade (aria-labels, contraste, inputs com labels)
+
+Política de Privacidade acessível
+
+Formulário protegido (anti-spam, reCAPTCHA se possível)
+
+Loading states e feedbacks visuais
+
+Sugestão de Pastas e Arquivos
+bash
+Copiar
+Editar
+/components
+  Header.jsx
+  Hero.jsx
+  Dores.jsx
+  Beneficios.jsx
+  Sobre.jsx
+  ProvasSociais.jsx
+  Formulario.jsx
+  FAQ.jsx
+  Footer.jsx
+/pages
+  index.jsx
+  obrigado.jsx
+/styles
+  tailwind.config.js (customizado para paleta)
+  globals.css
+/public
+  logo.png
+  imagens
+Exemplo de Copy
+Headline:
+“Descubra como transformar a saúde financeira da sua empresa!”
+
+Subtítulo:
+“Receba um diagnóstico financeiro gratuito e tenha uma reunião estratégica com o CEO da Jota Soluções.”
+
+Dores:
+“Você toma decisões no escuro? Não sabe se a empresa está crescendo de verdade?”
+
+Benefícios:
+“Tenha clareza, metas, segurança e apoio técnico para crescer.”
+
+Formulário:
+“Preencha seus dados para agendar sua análise gratuita!”
+
+CTA:
+“Quero meu diagnóstico gratuito”
+
+Observações Finais
+Não inclua venda direta ou orçamentos na página.
+
+Foco em gerar leads para abordagem consultiva.
+
+Se possível, inclua microanimações com Tailwind.
+
+Siga todo o branding da Jota Soluções: fonts, paleta, tom de voz consultivo, visual moderno e profissional.
+
+Gere todo o código da landing page (componentes, página, copy, responsividade, formulário, integração com CRM), pronto para deploy em Next.js com Tailwind CSS, com base nessas instruções.
