@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import { useJotaData } from './hooks/useJotaData.js';
 
 // Header Component
 const Header = () => {
@@ -86,7 +87,7 @@ const Header = () => {
 };
 
 // Hero Section
-const Hero = () => {
+const Hero = ({ landingData, getData }) => {
   const scrollToForm = () => {
     const element = document.getElementById('formulario');
     if (element) {
@@ -100,16 +101,16 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-center lg:text-left">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-              Descubra como <span className="text-jota-accent">transformar</span> a saúde financeira da sua empresa!
+              {getData('blocos', 'heroi.destaque', 'Descubra como')} <span className="text-jota-accent">transformar</span> a saúde financeira da sua empresa!
             </h1>
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Receba um diagnóstico financeiro gratuito e tenha uma reunião estratégica com o CEO da Jota Soluções.
+              {getData('description', '', 'Receba um diagnóstico financeiro gratuito e tenha uma reunião estratégica com o CEO da Jota Soluções.')}
             </p>
             <button 
               onClick={scrollToForm}
               className="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center space-x-2 hover:scale-105 transition-transform"
             >
-              <span>Quero meu diagnóstico gratuito</span>
+              <span>{getData('cta', '', 'Quero meu diagnóstico gratuito')}</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -154,8 +155,14 @@ const Hero = () => {
 };
 
 // Dores Section
-const Dores = () => {
-  const dores = [
+const Dores = ({ landingData, getData }) => {
+  const doresBackend = landingData?.blocos?.dores?.itens || [];
+  
+  const dores = doresBackend.length > 0 ? doresBackend.map((item, index) => ({
+    icon: ["📊", "🎯", "💡", "🚀"][index] || "📊",
+    title: item,
+    description: `Você enfrenta esse desafio no seu negócio?`
+  })) : [
     {
       icon: "📊",
       title: "Não sabe se o negócio está dando lucro",
@@ -205,8 +212,14 @@ const Dores = () => {
 };
 
 // Benefícios Section
-const Beneficios = () => {
-  const beneficios = [
+const Beneficios = ({ landingData, getData }) => {
+  const solucoesBackend = landingData?.blocos?.solucoes?.itens || [];
+  
+  const beneficios = solucoesBackend.length > 0 ? solucoesBackend.map((item, index) => ({
+    icon: ["🔍", "📈", "💼", "🤝"][index] || "🔍",
+    title: item,
+    description: `Transforme seu negócio com ${item.toLowerCase()}`
+  })) : [
     {
       icon: "🔍",
       title: "Clareza total dos números",
@@ -256,7 +269,9 @@ const Beneficios = () => {
 };
 
 // Sobre Section
-const Sobre = () => {
+const Sobre = ({ landingData, getData }) => {
+  const sobreData = landingData?.blocos?.sobre || {};
+  
   return (
     <section id="sobre" className="section-padding bg-jota-dark">
       <div className="container mx-auto px-6">
@@ -266,8 +281,7 @@ const Sobre = () => {
               Sobre a <span className="text-jota-accent">Jota Soluções</span>
             </h2>
             <p className="text-lg text-gray-300 mb-6 leading-relaxed">
-              Somos especialistas em BPO Financeiro, ajudando pequenas e médias empresas a organizarem suas finanças 
-              e tomarem decisões mais inteligentes baseadas em dados reais.
+              {sobreData.texto || 'Somos especialistas em BPO Financeiro, ajudando pequenas e médias empresas a organizarem suas finanças e tomarem decisões mais inteligentes baseadas em dados reais.'}
             </p>
             <p className="text-lg text-gray-300 mb-8 leading-relaxed">
               Nossa missão é transformar a gestão financeira das empresas, proporcionando clareza, controle e 
@@ -275,18 +289,16 @@ const Sobre = () => {
             </p>
             
             <div className="grid grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold text-jota-accent mb-2">500+</div>
-                <div className="text-sm text-gray-300">Empresas Atendidas</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-jota-accent mb-2">95%</div>
-                <div className="text-sm text-gray-300">Satisfação</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-jota-accent mb-2">5+</div>
-                <div className="text-sm text-gray-300">Anos de Experiência</div>
-              </div>
+              {(sobreData.dados || ['500+ Empresas Atendidas', '95% Satisfação', '5+ Anos de Experiência']).map((stat, index) => (
+                <div key={index}>
+                  <div className="text-3xl font-bold text-jota-accent mb-2">
+                    {stat.split(' ')[0]}
+                  </div>
+                  <div className="text-sm text-gray-300">
+                    {stat.split(' ').slice(1).join(' ')}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
           
@@ -296,11 +308,15 @@ const Sobre = () => {
                 <div className="w-24 h-24 bg-gradient-to-r from-jota-primary to-jota-accent rounded-full mx-auto mb-4 flex items-center justify-center">
                   <span className="text-white font-bold text-2xl">CEO</span>
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">João Silva</h3>
-                <p className="text-gray-300">CEO & Fundador</p>
+                <h3 className="text-xl font-semibold text-white mb-2">
+                  {sobreData.ceo?.nome || 'João Silva'}
+                </h3>
+                <p className="text-gray-300">
+                  {sobreData.ceo?.cargo || 'CEO & Fundador'}
+                </p>
               </div>
               <p className="text-gray-300 text-center text-sm leading-relaxed">
-                "Minha paixão é ajudar empresários a alcançarem seus objetivos através de uma gestão financeira eficiente e estratégica."
+                "{sobreData.ceo?.frase || 'Minha paixão é ajudar empresários a alcançarem seus objetivos através de uma gestão financeira eficiente e estratégica.'}"
               </p>
             </div>
           </div>
@@ -310,8 +326,65 @@ const Sobre = () => {
   );
 };
 
+// Provas Sociais Section
+const ProvasSociais = ({ landingData, getData }) => {
+  const depoimentosBackend = landingData?.blocos?.depoimentos?.clientes || [];
+  
+  const depoimentos = depoimentosBackend.length > 0 ? depoimentosBackend : [
+    {
+      nome: 'Maria Santos',
+      empresa: 'Boutique Elegance',
+      texto: 'Após o diagnóstico da Jota Soluções, consegui ter clareza total dos meus números. Meu faturamento aumentou 40% em 6 meses!'
+    },
+    {
+      nome: 'Carlos Oliveira',
+      empresa: 'TechStart Solutions',
+      texto: 'O BPO Financeiro transformou minha empresa. Agora tomo decisões baseadas em dados, não no achismo. Recomendo!'
+    },
+    {
+      nome: 'Ana Costa',
+      empresa: 'Padaria Artesanal',
+      texto: 'Finalmente entendo se minha empresa está dando lucro. O suporte é excepcional e os resultados são visíveis!'
+    }
+  ];
+
+  return (
+    <section className="section-padding gradient-bg">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            O que nossos <span className="text-jota-accent">clientes dizem</span>
+          </h2>
+          <p className="text-xl text-gray-300">
+            Veja os resultados reais de empresários que transformaram seus negócios
+          </p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          {depoimentos.map((depoimento, index) => (
+            <div key={index} className="card-dark p-6 rounded-xl hover:scale-105 transition-transform duration-300">
+              <div className="flex mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                ))}
+              </div>
+              <p className="text-gray-300 mb-4 leading-relaxed">"{depoimento.texto}"</p>
+              <div>
+                <div className="font-semibold text-white">{depoimento.nome}</div>
+                <div className="text-sm text-jota-accent">{depoimento.empresa}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // Formulário Section
-const Formulario = () => {
+const Formulario = ({ landingData, getData }) => {
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -331,14 +404,48 @@ const Formulario = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.lgpd) {
       alert('É necessário aceitar os termos da LGPD para continuar.');
       return;
     }
-    console.log('Dados do formulário:', formData);
-    alert('Formulário enviado com sucesso! Você será contatado em breve.');
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://212.85.10.205:3000';
+      
+      const response = await fetch(`${apiUrl}/api/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          ...formData,
+          projeto: 'jota-solucoes',
+          timestamp: new Date().toISOString()
+        })
+      });
+
+      if (response.ok) {
+        alert('Formulário enviado com sucesso! Você será contatado em breve.');
+        
+        setFormData({
+          nome: '',
+          email: '',
+          telefone: '',
+          empresa: '',
+          faturamento: '',
+          segmento: '',
+          contasBancarias: '',
+          lgpd: false
+        });
+      } else {
+        throw new Error('Erro ao enviar formulário');
+      }
+    } catch (error) {
+      alert('Erro ao enviar formulário. Tente novamente.');
+    }
   };
 
   return (
@@ -508,10 +615,15 @@ const Formulario = () => {
 };
 
 // FAQ Section
-const FAQ = () => {
+const FAQ = ({ landingData, getData }) => {
   const [openIndex, setOpenIndex] = useState(null);
-
-  const faqs = [
+  
+  const faqsBackend = landingData?.blocos?.faq?.perguntas || [];
+  
+  const faqs = faqsBackend.length > 0 ? faqsBackend.map(pergunta => ({
+    pergunta,
+    resposta: 'Esta informação será fornecida em breve pelo nosso time especializado.'
+  })) : [
     {
       pergunta: "O diagnóstico é realmente gratuito?",
       resposta: "Sim, o diagnóstico inicial é 100% gratuito. Analisamos sua situação atual e apresentamos as oportunidades de melhoria sem nenhum custo."
@@ -577,7 +689,9 @@ const FAQ = () => {
 };
 
 // Footer Component
-const Footer = () => {
+const Footer = ({ landingData, getData }) => {
+  const footerData = landingData?.blocos?.footer || {};
+  
   return (
     <footer id="contato" className="bg-jota-dark border-t border-gray-800">
       <div className="container mx-auto px-6 py-12">
@@ -587,29 +701,30 @@ const Footer = () => {
               <div className="w-10 h-10 bg-gradient-to-r from-jota-primary to-jota-accent rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-lg">J</span>
               </div>
-              <span className="text-xl font-bold text-white">Jota Soluções</span>
+              <span className="text-xl font-bold text-white">
+                {footerData.empresa || 'Jota Soluções'}
+              </span>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
-              Especialistas em BPO Financeiro, ajudando empresas a organizarem suas finanças e crescerem com segurança.
+              {footerData.descricao || 'Especialistas em BPO Financeiro, ajudando empresas a organizarem suas finanças e crescerem com segurança.'}
             </p>
           </div>
           
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">Serviços</h4>
             <ul className="space-y-2 text-gray-300">
-              <li>BPO Financeiro</li>
-              <li>Diagnóstico Gratuito</li>
-              <li>Consultoria Estratégica</li>
-              <li>Controle de Fluxo de Caixa</li>
+              {(footerData.servicos || ['BPO Financeiro', 'Diagnóstico Gratuito', 'Consultoria Estratégica', 'Controle de Fluxo de Caixa']).map((servico, index) => (
+                <li key={index}>{servico}</li>
+              ))}
             </ul>
           </div>
           
           <div>
             <h4 className="text-lg font-semibold text-white mb-4">Contato</h4>
             <div className="space-y-2 text-gray-300">
-              <p>📧 contato@jotasolucoes.com.br</p>
-              <p>📱 (11) 99999-9999</p>
-              <p>📍 São Paulo - SP</p>
+              <p>📧 {footerData.email || 'contato@jotasolucoes.com.br'}</p>
+              <p>📱 {footerData.telefone || '(11) 99999-9999'}</p>
+              <p>📍 {footerData.cidade || 'São Paulo - SP'}</p>
             </div>
           </div>
         </div>
@@ -624,16 +739,60 @@ const Footer = () => {
 
 // Main App Component
 export default function App() {
+  const { landingData, loading, error, refetch } = useJotaData(true, 30000);
+
+  const getData = (section, field, fallback) => {
+    if (!landingData) return fallback;
+    
+    const path = field.split('.');
+    let value = landingData[section];
+    
+    for (const key of path) {
+      value = value?.[key];
+    }
+    
+    return value || fallback;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-jota-accent mx-auto mb-4"></div>
+          <p className="text-white">Carregando...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-4xl mb-4">⚠️</div>
+          <p className="text-white mb-4">Erro ao carregar conteúdo.</p>
+          <button 
+            onClick={refetch}
+            className="bg-jota-accent hover:bg-jota-primary text-white px-6 py-2 rounded-lg transition-colors"
+          >
+            Tentar Novamente
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <Header />
-      <Hero />
-      <Dores />
-      <Beneficios />
-      <Sobre />
-      <Formulario />
-      <FAQ />
-      <Footer />
+      <Hero landingData={landingData} getData={getData} />
+      <Dores landingData={landingData} getData={getData} />
+      <Beneficios landingData={landingData} getData={getData} />
+      <Sobre landingData={landingData} getData={getData} />
+      <ProvasSociais landingData={landingData} getData={getData} />
+      <Formulario landingData={landingData} getData={getData} />
+      <FAQ landingData={landingData} getData={getData} />
+      <Footer landingData={landingData} getData={getData} />
     </div>
   );
 }
