@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import './App.css';
 
@@ -25,7 +24,6 @@ const Header = () => {
             <span className="text-xl font-bold text-white">Jota Soluções</span>
           </div>
           
-          {/* Desktop Menu */}
           <nav className="hidden md:flex items-center space-x-8">
             <button onClick={() => scrollToSection('home')} className="text-white hover:text-jota-accent transition-colors">
               Início
@@ -43,12 +41,11 @@ const Header = () => {
 
           <button 
             onClick={() => scrollToSection('formulario')}
-            className="hidden md:block btn-primary text-white px-6 py-2 rounded-lg font-semibold"
+            className="hidden md:block btn-primary text-white px-6 py-2 rounded-lg font-semibold hover:scale-105 transition-transform"
           >
             Quero meu diagnóstico gratuito
           </button>
 
-          {/* Mobile menu button */}
           <button 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden text-white"
@@ -59,7 +56,6 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <nav className="md:hidden mt-4 pb-4">
             <div className="flex flex-col space-y-4">
@@ -111,7 +107,7 @@ const Hero = () => {
             </p>
             <button 
               onClick={scrollToForm}
-              className="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center space-x-2"
+              className="btn-primary text-white px-8 py-4 rounded-lg font-semibold text-lg inline-flex items-center space-x-2 hover:scale-105 transition-transform"
             >
               <span>Quero meu diagnóstico gratuito</span>
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,11 +137,11 @@ const Hero = () => {
                 
                 <div className="h-32 bg-gradient-to-r from-jota-primary/20 to-jota-accent/20 rounded-lg flex items-end justify-center p-4">
                   <div className="flex items-end space-x-2">
-                    <div className="w-4 h-12 bg-jota-accent rounded"></div>
-                    <div className="w-4 h-16 bg-jota-primary rounded"></div>
-                    <div className="w-4 h-8 bg-jota-accent rounded"></div>
-                    <div className="w-4 h-20 bg-jota-primary rounded"></div>
-                    <div className="w-4 h-14 bg-jota-accent rounded"></div>
+                    <div className="w-4 h-12 bg-jota-accent rounded animate-pulse"></div>
+                    <div className="w-4 h-16 bg-jota-primary rounded animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                    <div className="w-4 h-8 bg-jota-accent rounded animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                    <div className="w-4 h-20 bg-jota-primary rounded animate-pulse" style={{animationDelay: '0.6s'}}></div>
+                    <div className="w-4 h-14 bg-jota-accent rounded animate-pulse" style={{animationDelay: '0.8s'}}></div>
                   </div>
                 </div>
               </div>
@@ -196,7 +192,7 @@ const Dores = () => {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {dores.map((dor, index) => (
-            <div key={index} className="card-dark p-6 rounded-xl text-center hover:scale-105 transition-transform">
+            <div key={index} className="card-dark p-6 rounded-xl text-center hover:scale-105 transition-transform duration-300">
               <div className="text-4xl mb-4">{dor.icon}</div>
               <h3 className="text-lg font-semibold text-white mb-3">{dor.title}</h3>
               <p className="text-gray-300 text-sm leading-relaxed">{dor.description}</p>
@@ -247,7 +243,7 @@ const Beneficios = () => {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {beneficios.map((beneficio, index) => (
-            <div key={index} className="card-dark p-6 rounded-xl text-center hover:scale-105 transition-transform">
+            <div key={index} className="card-dark p-6 rounded-xl text-center hover:scale-105 transition-transform duration-300">
               <div className="text-4xl mb-4">{beneficio.icon}</div>
               <h3 className="text-lg font-semibold text-white mb-3">{beneficio.title}</h3>
               <p className="text-gray-300 text-sm leading-relaxed">{beneficio.description}</p>
@@ -314,64 +310,6 @@ const Sobre = () => {
   );
 };
 
-// Provas Sociais Section
-const ProvasSociais = () => {
-  const depoimentos = [
-    {
-      nome: "Maria Santos",
-      empresa: "Boutique Elegance",
-      depoimento: "Após o diagnóstico da Jota Soluções, consegui ter clareza total dos meus números. Meu faturamento aumentou 40% em 6 meses!",
-      rating: 5
-    },
-    {
-      nome: "Carlos Oliveira",
-      empresa: "TechStart Solutions",
-      depoimento: "O BPO Financeiro transformou minha empresa. Agora tomo decisões baseadas em dados, não no achismo. Recomendo!",
-      rating: 5
-    },
-    {
-      nome: "Ana Costa",
-      empresa: "Padaria Artesanal",
-      depoimento: "Finalmente entendo se minha empresa está dando lucro. O suporte é excepcional e os resultados são visíveis!",
-      rating: 5
-    }
-  ];
-
-  return (
-    <section className="section-padding gradient-bg">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            O que nossos <span className="text-jota-accent">clientes dizem</span>
-          </h2>
-          <p className="text-xl text-gray-300">
-            Veja os resultados reais de empresários que transformaram seus negócios
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {depoimentos.map((depoimento, index) => (
-            <div key={index} className="card-dark p-6 rounded-xl">
-              <div className="flex mb-4">
-                {[...Array(depoimento.rating)].map((_, i) => (
-                  <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-gray-300 mb-4 leading-relaxed">"{depoimento.depoimento}"</p>
-              <div>
-                <div className="font-semibold text-white">{depoimento.nome}</div>
-                <div className="text-sm text-jota-accent">{depoimento.empresa}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 // Formulário Section
 const Formulario = () => {
   const [formData, setFormData] = useState({
@@ -395,10 +333,12 @@ const Formulario = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aqui você integraria com o CRM Clint
+    if (!formData.lgpd) {
+      alert('É necessário aceitar os termos da LGPD para continuar.');
+      return;
+    }
     console.log('Dados do formulário:', formData);
-    alert('Formulário enviado com sucesso! Você será redirecionado para agendar sua reunião.');
-    // Redirecionar para página de agradecimento
+    alert('Formulário enviado com sucesso! Você será contatado em breve.');
   };
 
   return (
@@ -426,7 +366,7 @@ const Formulario = () => {
                   value={formData.nome}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none"
+                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none transition-colors"
                 />
               </div>
               
@@ -440,7 +380,7 @@ const Formulario = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none"
+                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -456,7 +396,7 @@ const Formulario = () => {
                   value={formData.telefone}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none"
+                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none transition-colors"
                 />
               </div>
               
@@ -470,7 +410,7 @@ const Formulario = () => {
                   value={formData.empresa}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none"
+                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none transition-colors"
                 />
               </div>
             </div>
@@ -485,7 +425,7 @@ const Formulario = () => {
                   value={formData.faturamento}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none"
+                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none transition-colors"
                 >
                   <option value="">Selecione uma opção</option>
                   <option value="até-10k">Até R$ 10.000</option>
@@ -505,7 +445,7 @@ const Formulario = () => {
                   value={formData.segmento}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none"
+                  className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none transition-colors"
                 >
                   <option value="">Selecione uma opção</option>
                   <option value="comercio">Comércio</option>
@@ -527,7 +467,7 @@ const Formulario = () => {
                 value={formData.contasBancarias}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none"
+                className="w-full px-4 py-3 bg-jota-dark border border-gray-600 rounded-lg text-white focus:border-jota-accent focus:outline-none transition-colors"
               >
                 <option value="">Selecione uma opção</option>
                 <option value="1">1 conta</option>
@@ -556,7 +496,7 @@ const Formulario = () => {
             
             <button
               type="submit"
-              className="w-full btn-primary text-white py-4 rounded-lg font-semibold text-lg"
+              className="w-full btn-primary text-white py-4 rounded-lg font-semibold text-lg hover:scale-105 transition-transform"
             >
               Quero meu diagnóstico gratuito!
             </button>
@@ -615,7 +555,7 @@ const FAQ = () => {
               >
                 <span className="font-semibold text-white">{faq.pergunta}</span>
                 <svg 
-                  className={`w-5 h-5 text-jota-accent transform transition-transform ${openIndex === index ? 'rotate-180' : ''}`}
+                  className={`w-5 h-5 text-jota-accent transform transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -652,23 +592,6 @@ const Footer = () => {
             <p className="text-gray-300 mb-4 max-w-md">
               Especialistas em BPO Financeiro, ajudando empresas a organizarem suas finanças e crescerem com segurança.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-jota-accent transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                </svg>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-jota-accent transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                </svg>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-jota-accent transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
-            </div>
           </div>
           
           <div>
@@ -693,10 +616,6 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; 2024 Jota Soluções. Todos os direitos reservados.</p>
-          <p className="mt-2">
-            <a href="#" className="hover:text-jota-accent transition-colors">Política de Privacidade</a> | 
-            <a href="#" className="hover:text-jota-accent transition-colors ml-2">Termos de Uso</a>
-          </p>
         </div>
       </div>
     </footer>
@@ -712,7 +631,6 @@ export default function App() {
       <Dores />
       <Beneficios />
       <Sobre />
-      <ProvasSociais />
       <Formulario />
       <FAQ />
       <Footer />
